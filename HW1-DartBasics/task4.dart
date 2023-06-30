@@ -9,23 +9,29 @@ void main() {
     "D": 500,
     "M": 1000
   };
+  
+  bool isLastChar(String s, int idx) {
+    return idx == s.length - 1;
+  }
 
   int romanToInt(String roman) {
-    var res = 0;
-
+    var result = 0;
+    
     for (var i = 0; i < roman.length; i++) {
-      String current = roman[i];
-      String next = i < roman.length - 1 ? roman[i + 1] : "null";
+      int current = romanToArabic[roman[i]]!;
+      int next = isLastChar(roman, i) ? 0 : romanToArabic[roman[i + 1]]!;
       
-      if (romanToArabic[current]! < romanToArabic[next]!) {
-        res -= romanToArabic[roman[i]]!;
+      if ((isLastChar(roman, i)) || (current >= next && next != 0)) {
+        result += current;
       } else {
-        res += romanToArabic[roman[i]]!;
+        result -= current;
       }
     }
-    return res;
+    
+    return result;
   }
   
   print(romanToInt("III")); // 3
   print(romanToInt("CCXIX")); // 219
+  print(romanToInt("CDVII")); // 407
 }
