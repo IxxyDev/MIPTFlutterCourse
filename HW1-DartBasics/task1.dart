@@ -1,6 +1,6 @@
 void main() {
     int findFirstUniqueNumber(List<int> array) {
-        return array.firstWhere((num) => array.indexOf(num) == array.lastIndexOf(num)) ?? -1;
+        return array.firstWhere((num) => array.indexOf(num) == array.lastIndexOf(num));
     }
 
     print(findFirstUniqueNumber([1, 2, 2, 3, 1])); // 3

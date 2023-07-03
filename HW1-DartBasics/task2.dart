@@ -10,6 +10,6 @@ void main() {
         return [0, 0];
     }
 
-    print(findIndexesGivesSum([1, 2, 3], 5)) // [1, 2];
-    print(findIndexesGivesSum([8, 6, 5, 3], 2)) // [0, 0]
+    print(findIndexesGivesSum([1, 2, 3], 5)); // [1, 2];
+    print(findIndexesGivesSum([8, 6, 5, 3], 2)); // [0, 0]
 }
