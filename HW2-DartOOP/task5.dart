@@ -10,15 +10,16 @@ void main() {
 class TimeService {
   String _currentTime = '';
   int _updatePeriodInSeconds = 60;
-  final SECONDS_TO_MILLISECONDS_MULTIPLYER = 1000;
+  static const _kSedondsToMillisecondsMultiplyer =
+      1000; //const без static нельзя; потому был final
   DateTime _lastGetTime = DateTime.fromMillisecondsSinceEpoch(0);
-
 
   String get currentTime {
     final currentTime = DateTime.now();
 
-    if (currentTime.microsecondsSinceEpoch - _lastGetTime.microsecondsSinceEpoch > 
-    SECONDS_TO_MILLISECONDS_MULTIPLYER * _updatePeriodInSeconds) {
+    if (currentTime.microsecondsSinceEpoch -
+            _lastGetTime.microsecondsSinceEpoch >
+        _kSedondsToMillisecondsMultiplyer * _updatePeriodInSeconds) {
       _currentTime = DateTimeApiService.getCurrentTime().toString();
     }
 
@@ -28,7 +29,9 @@ class TimeService {
   }
 
   set updatePeriodInSeconds(int seconds) {
-    _updatePeriodInSeconds = seconds;
+    if (seconds > 0) {
+      _updatePeriodInSeconds = seconds;
+    }
   }
 }
 
