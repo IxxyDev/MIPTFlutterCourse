@@ -65,12 +65,16 @@ class CardList extends StatelessWidget {
         SizedBox(height: 400),
         Flexible(
           fit: FlexFit.loose,
-          child: ListView.builder(
-              scrollDirection: isTablet ? Axis.horizontal : Axis.vertical,
-              itemCount: cards.length,
-              itemBuilder: (BuildContext context, int index) {
-                return InfoCard(card: cards[index]);
-              }),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.5,
+            child: ListView.builder(
+                scrollDirection: isTablet ? Axis.horizontal : Axis.vertical,
+                itemCount: cards.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InfoCard(card: cards[index]);
+                }),
+          ),
         ),
       ],
     );
@@ -93,16 +97,14 @@ class InfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    bool isTablet = MediaQuery.of(context).size.width > 600;
 
-    return SizedBox(
-      height: isTablet ? 250 : 200,
-      width: 300,
-      child: Card(
-          elevation: 8.0,
-          color: theme.colorScheme.background,
-          child: Padding(
-            padding: const EdgeInsets.all(8),
+    return Card(
+        elevation: 8.0,
+        color: theme.colorScheme.background,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SizedBox(
+            width: 400,
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Flexible(
                 flex: 4,
@@ -127,8 +129,8 @@ class InfoCard extends StatelessWidget {
                 ),
               )
             ]),
-          )),
-    );
+          ),
+        ));
   }
 }
 
@@ -146,25 +148,30 @@ class Background extends StatelessWidget {
           height: double.infinity,
         ),
         ShaderMask(
-            shaderCallback: (Rect bounds) {
+            shaderCallback: (bounds) {
               return LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: <Color>[
                   theme.primaryColor,
-                  Colors.white.withOpacity(0.5)
+                  Colors.white,
+                  Colors.white.withOpacity(0.0)
                 ],
+                stops: [0, 0.8, 1],
                 tileMode: TileMode.decal,
               ).createShader(bounds);
             },
             child: Image.asset("assets/main_pic.jpeg",
                 fit: BoxFit.cover, width: double.infinity, height: 400)),
-        Text('Welcome to Surgut',
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Gloomy',
-                fontSize: 72,
-                fontWeight: FontWeight.bold))
+        Padding(
+          padding: EdgeInsets.all(100.0),
+          child: Text('Welcome to Surgut',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Gloomy',
+                  fontSize: 72,
+                  fontWeight: FontWeight.bold)),
+        )
       ],
     );
   }
